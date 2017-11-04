@@ -1,0 +1,9 @@
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Release\P.A.I.S.exe
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Release\P.A.I.S.pdb
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Release\P.A.I.S.xml
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\PAIS.ApplicationWindow.resources
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\PAIS.Resources.resources
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\P.A.I.S.vbproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\P.A.I.S.exe
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\P.A.I.S.xml
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Release\P.A.I.S.pdb
