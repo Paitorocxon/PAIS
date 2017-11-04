@@ -1,0 +1,4 @@
+goto start
+everything in here wil be ignored
+[start]
+echoL HEY HEY!

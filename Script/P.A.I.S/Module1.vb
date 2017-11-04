@@ -10,9 +10,12 @@ Imports System.IO.Compression
 Imports System.IO.Compression.GZipStream
 
 
+
 Module Module1
     Public Versionscode As String = "O- v1.1.4"
 
+    Public procout As String = Nothing
+    Public procerror As String = Nothing
     Public ForVar As String = Nothing
     Public VariableNames(3200) As String
     Public Vars(3200) As String
@@ -24,6 +27,7 @@ Module Module1
 
     Public Binfile As String = ""
 
+    Public forcounts As Integer = 0
     Public MainFile As String = Nothing
     Public DefForeColor As ConsoleColor
     Public DefBackColor As ConsoleColor
@@ -118,6 +122,8 @@ Module Module1
 
     Public Function Replac(ByVal sa As String) As String
 
+
+
         Dim NetInface As NetworkInformation.NetworkInterface() = NetworkInformation.NetworkInterface.GetAllNetworkInterfaces
         Dim WriteIndex As Integer = 0
         sa = sa.Replace("%simpletime", My.Computer.Clock.LocalTime.Hour & ":" & My.Computer.Clock.LocalTime.Minute)
@@ -132,14 +138,16 @@ Module Module1
         sa = sa.Replace("%break", vbCrLf)
         sa = sa.Replace("%version", Versionscode)
         sa = sa.Replace("%path", My.Application.Info.DirectoryPath)
+        sa = sa.Replace("%fors", forcounts)
         sa = sa.Replace("%for", ForVar)
-
-
+        sa = sa.Replace("%procout", procout)
+        sa = sa.Replace("%procerror", procout)
 
 
 
         For Each Variable In VariableNames
-            If Variable = "" Then
+            If Variable = Nothing Then
+                Exit For
             Else
                 sa = sa.Replace("%" & Variable, Vars(WriteIndex))
                 WriteIndex += 1
@@ -350,22 +358,29 @@ DirectInput:
             Console.TreatControlCAsInput = False
 
         ElseIf Scriptline.ToLower.StartsWith("goto ") Then
-            'Dim TempIndex As Integer = 0
-            'Try
-            'For Each ScriptContent As String In File
-            'If Replac(ScriptContent.ToLower) = "[" & Scriptline.ToLower.Substring(5) & "]" Then
-            'Index0 = TempIndex
-            'Exit For
-            'Else
-            'TempIndex += 1
-            'End If
-            'Next
-            'Catch ausnahme As Exception
-            'ErrorHandle("Error! " & vbCrLf & ausnahme.Message)
-            'End Try
-            If Scriptline.ToLower.Substring(5) > 0 Then
-                Index0 = Scriptline.ToLower.Substring(5)
-            End If
+            Dim TempIndex As Integer = 0
+            Try
+
+                If IsNumeric(Scriptline.ToLower.Substring(5)) Then
+
+                    Index0 = Scriptline.ToLower.Substring(5)
+
+                Else
+
+                    For Each ScriptContent As String In File
+                        If Replac(ScriptContent.ToLower) = "[" & Scriptline.ToLower.Substring(5) & "]" Then
+                            Index0 = TempIndex
+                            Exit For
+                        Else
+                            TempIndex += 1
+                        End If
+                    Next
+
+                End If
+            Catch ausnahme As Exception
+                ErrorHandle("Error! " & vbCrLf & ausnahme.Message)
+            End Try
+
 
         ElseIf Scriptline.ToLower.StartsWith("#") Then
         ElseIf Scriptline.ToLower.StartsWith("!") Then
@@ -518,22 +533,6 @@ NextOne:
 
                     VariableNames(WriteIndex) = VariableName
                     Vars(WriteIndex) = Tipper(Replac(Scriptline.Substring(ScIndex)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -983,8 +982,9 @@ for_second:
                         For Each TempForVar As String In for_second
                             If TempForVar = for_first Then
 
+                                forcounts += 1
                                 ForVar = TempForVar
-                                AllFunctions(Scriptline.Substring(9 + for_first.Length + 1 + for_second.Length + 1))
+                                AllFunctions(Replac(Scriptline.Substring(9 + for_first.Length + 1 + for_second.Length + 1)))
 
                             End If
                         Next
@@ -1049,6 +1049,70 @@ for_second:
             Catch ausnahme As Exception
                 ErrorHandle("Error!" & vbCrLf & ausnahme.Message)
             End Try
+        ElseIf Scriptline.ToLower.StartsWith("extent(") Then
+            Try
+                Dim Method As String = Nothing
+                Dim NewScriptline As String = Replac(Scriptline.Substring(7))
+                Dim extent_first As String = ""
+                Dim extent_second As String = Nothing
+                Dim TemporIndex As Integer = 0
+extent_first:
+                If NewScriptline(TemporIndex) = "," Then
+                    TemporIndex += 1
+                    GoTo extent_second
+                Else
+                    extent_first = extent_first & NewScriptline(TemporIndex)
+                    TemporIndex += 1
+                    GoTo extent_first
+                End If
+extent_second:
+                If NewScriptline(TemporIndex) = ")" Then
+                    Try
+                        If My.Computer.FileSystem.DirectoryExists("plugins\") Then
+                            If My.Computer.FileSystem.FileExists("plugins\" & extent_first) Then
+                       
+                                Dim proc As Process = New Process
+                                proc.StartInfo.FileName = "plugins\" & extent_first
+
+                                proc.StartInfo.Arguments = extent_second
+                                proc.StartInfo.UseShellExecute = False
+                                proc.StartInfo.RedirectStandardOutput = True
+                                proc.Start()
+                                Dim output As String = proc.StandardOutput.ReadToEnd
+                                procout = output
+                                proc.WaitForExit()
+
+
+                            Else
+                                ErrorHandle("File not found! Argument:" & extent_first)
+                            End If
+                        End If
+                    Catch ex As Exception
+                        ErrorHandle("Error while initializing plugin!")
+                    End Try
+                    Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
+                    Exit Function
+                Else
+                    extent_second = extent_second & NewScriptline(TemporIndex)
+                End If
+
+
+
+                TemporIndex += 1
+                GoTo extent_second
+
+
+
+
+
+
+
+
+
+            Catch ex As Exception
+                ErrorHandle("Error while initalizing extention!")
+            End Try
+
 
         ElseIf Scriptline.ToLower.StartsWith("writetofile:") Then
             Try

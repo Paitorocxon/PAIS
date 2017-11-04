@@ -1,0 +1,46 @@
+error:off
+$x=0
+$y=0
+foreground=black
+background=white
+[main]
+
+$ergebnis1=0
+$ergebnis2=0
+$ergebnis3=0
+$wins=0
+echo Hit any key to start the game!
+pause
+[level1]
+clear
+echo 3+3=
+$ergebnis1<
+clear
+[level2]
+echo 3+2=
+$ergebnis2<
+clear
+[level3]
+echo 16/2=
+$ergebnis3<
+clear
+#######AUSWERTUNG!
+$wins-%wins
+if %ergebnis1=6>$wins+1
+if %ergebnis2=5>$wins+1
+if %ergebnis3=8>$wins+1
+
+echo sie haben %wins/3 Ausgaben gelöst!
+pause
+clear
+
+
+$a=0
+[loop]
+clear
+$a+1
+echo %a
+pause
+goto loop
+
+goto main

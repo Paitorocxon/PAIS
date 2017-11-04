@@ -1,0 +1,96 @@
+error:off
+encoding:standard
+title=PAIS 
+foreground=green
+background=darkgreen
+[main]
+console_window 30'3
+
+
+
+wait 50
+clear
+break
+echo       | ▌      |  loading...
+
+
+wait 50
+clear
+break
+echo       | █      |  loading...
+
+
+wait 50
+clear
+break
+echo       | ▐▌     |  loading...
+
+
+wait 50
+clear
+break
+echo       |  █     |  loading...
+
+
+wait 50
+clear
+break
+echo       |  ▐▌    |  loading...
+
+
+wait 50
+clear
+break
+echo       |   █    |  loading...
+
+
+wait 50
+clear
+break
+echo       |   ▐▌   |  loading...
+
+
+wait 50
+clear
+break
+echo       |    █   |  loading...
+
+
+wait 50
+clear
+break
+echo       |    ▐▌  |  loading...
+
+
+wait 50
+clear
+break
+echo       |     █  |  loading...
+
+
+wait 50
+clear
+break
+echo       |     ▐▌ |  loading...
+
+
+wait 50
+clear
+break
+echo       |      █ |  loading...
+
+
+wait 50
+clear
+break
+echo       |      ▐ |  loading...
+
+
+wait 50
+clear
+break
+echo       |        |  loading...
+wait 1000
+
+
+goto main

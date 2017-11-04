@@ -1,0 +1,28 @@
+error:on
+$a=1
+$b=111111111
+$c=1
+$ergebnis=0
+$ergebnis+%a
+$ergebnis+%b
+$ergebnis+%c
+echoL %ergebnis
+echoL #######################
+echoL %a %b %c
+echoL %ergebnis
+echoL #######################
+echoL %a %b %c
+echoL %ergebnis
+echoL #######################
+echoL %a %b %c
+echoL %ergebnis
+echoL #######################
+echoL %a %b %c
+echoL %ergebnis
+echoL #######################
+echoL %a %b %c
+echol ########################################
+echoL end of script
+goto exit
+echo FEHLER!
+[exit]
