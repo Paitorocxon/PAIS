@@ -1,9 +1,9 @@
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\P.A.I.S.exe
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\P.A.I.S.pdb
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\P.A.I.S.xml
 C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\PAIS.ApplicationWindow.resources
 C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\PAIS.Resources.resources
 C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\P.A.I.S.vbproj.GenerateResource.Cache
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\P.A.I.S.exe
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\P.A.I.S.xml
-C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\P.A.I.S.pdb
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\pais.exe
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\pais.pdb
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\bin\Debug\pais.xml
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\pais.exe
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\pais.xml
+C:\Users\Admin\Desktop\cleaned\Paitcode\-PAIS\Script\P.A.I.S\obj\x86\Debug\pais.pdb

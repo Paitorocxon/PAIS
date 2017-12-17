@@ -1,5 +1,5 @@
 ﻿''PAIS 
-''copyright © Fabian Müller 2017 (Paitorocxon)
+''copyright © Fabian Müller 2017-2018 (Paitorocxon)
 ''Act like it's a baby! ...it needs your protection! :'D
 Imports System.Net
 Imports System.Net.Sockets
@@ -12,8 +12,8 @@ Imports System.IO.Compression.GZipStream
 
 
 Module Module1
-    Public Versionscode As String = "O- v1.1.4"
-
+    Public Versionscode As String = "O- v1.1.5"
+    Public Dir As String = Nothing
     Public procout As String = Nothing
     Public procerror As String = Nothing
     Public ForVar As String = Nothing
@@ -43,7 +43,6 @@ Module Module1
 
 
     Public Function _StringToBinary(ByVal Text As String, Optional ByVal Separator As String = " ") As String
-
         Dim oReturn As New System.Text.StringBuilder
         For Each Character As Byte In System.Text.ASCIIEncoding.ASCII.GetBytes(Text)
             oReturn.Append(Convert.ToString(Character, 2).PadLeft(8, "0"))
@@ -78,18 +77,14 @@ Module Module1
 
     Sub Main()
 
-
+        Dir = My.Application.Info.DirectoryPath
         VariableNames(0) = "nul"
         Vars(0) = "nul"
         VariableNames(0) = "nul"
-        DefForeColor = ConsoleColor.White
-        DefBackColor = ConsoleColor.Black
-        Console.ForegroundColor = ConsoleColor.White
-        Console.BackgroundColor = ConsoleColor.Black
-        DefaultEncoding = Console.OutputEncoding
-        Console.ForegroundColor = ConsoleColor.White
         DefForeColor = Console.ForegroundColor
+
         DefBackColor = Console.BackgroundColor
+        DefaultEncoding = Console.OutputEncoding
 
 
         Console.Title = "PAIS " & Versionscode
@@ -104,9 +99,9 @@ Module Module1
             directinput()
         End Try
         Try
-            My.Computer.Registry.ClassesRoot.CreateSubKey(".pais").SetValue("", "PAIS", Microsoft.Win32.RegistryValueKind.String)
-            My.Computer.Registry.ClassesRoot.CreateSubKey("PAIS\shell\open\command").SetValue("", """" & PAIS.My.Application.Info.DirectoryPath & "\P.A.I.S.exe" & """" & """%1"" ", Microsoft.Win32.RegistryValueKind.String)
-            My.Computer.Registry.ClassesRoot.CreateSubKey("PAIS\DefaultIcon").SetValue("", PAIS.My.Application.Info.DirectoryPath & "\favicon.ico,0", Microsoft.Win32.RegistryValueKind.String)
+            My.Computer.Registry.ClassesRoot.CreateSubKey(".pais").SetValue("", "pais", Microsoft.Win32.RegistryValueKind.String)
+            My.Computer.Registry.ClassesRoot.CreateSubKey("pais\shell\open\command").SetValue("", """" & PAIS.My.Application.Info.DirectoryPath & "\pais.exe" & """" & """%1"" ", Microsoft.Win32.RegistryValueKind.String)
+            My.Computer.Registry.ClassesRoot.CreateSubKey("pais\DefaultIcon").SetValue("", PAIS.My.Application.Info.DirectoryPath & "\favicon.ico,0", Microsoft.Win32.RegistryValueKind.String)
             Runtime()
             End
         Catch ausnahme As Exception
@@ -122,13 +117,11 @@ Module Module1
 
     Public Function Replac(ByVal sa As String) As String
 
-
+     
 
         Dim NetInface As NetworkInformation.NetworkInterface() = NetworkInformation.NetworkInterface.GetAllNetworkInterfaces
         Dim WriteIndex As Integer = 0
         sa = sa.Replace("%simpletime", My.Computer.Clock.LocalTime.Hour & ":" & My.Computer.Clock.LocalTime.Minute)
-        sa = sa.Replace("%time", My.Computer.Clock.LocalTime)
-        sa = sa.Replace("%date", My.Computer.Clock.LocalTime.Date)
         sa = sa.Replace("%ramav", My.Computer.Info.AvailableVirtualMemory)
         sa = sa.Replace("%ramap", My.Computer.Info.AvailablePhysicalMemory)
         sa = sa.Replace("%ramtv", My.Computer.Info.TotalPhysicalMemory)
@@ -142,6 +135,31 @@ Module Module1
         sa = sa.Replace("%for", ForVar)
         sa = sa.Replace("%procout", procout)
         sa = sa.Replace("%procerror", procout)
+        sa = sa.Replace("%dir", Dir)
+
+        sa = sa.Replace("%date.y", My.Computer.Clock.LocalTime.Year)
+        sa = sa.Replace("%date.m", My.Computer.Clock.LocalTime.Month)
+        sa = sa.Replace("%date.d", My.Computer.Clock.LocalTime.Day)
+        sa = sa.Replace("%time.ticks", My.Computer.Clock.LocalTime.Ticks)
+        sa = sa.Replace("%time.h", My.Computer.Clock.LocalTime.Hour)
+        sa = sa.Replace("%time.m", My.Computer.Clock.LocalTime.Minute)
+        sa = sa.Replace("%time.s", My.Computer.Clock.LocalTime.Second)
+        sa = sa.Replace("%time.t", My.Computer.Clock.LocalTime.Millisecond)
+
+
+        sa = sa.Replace("%time", My.Computer.Clock.LocalTime)
+        sa = sa.Replace("%date", My.Computer.Clock.LocalTime.Date)
+
+        Try
+            sa = sa.Replace("%arg0", My.Application.CommandLineArgs(0))
+            sa = sa.Replace("%arg1", My.Application.CommandLineArgs(1))
+            sa = sa.Replace("%arg2", My.Application.CommandLineArgs(2))
+            sa = sa.Replace("%arg3", My.Application.CommandLineArgs(3))
+        Catch ex As Exception
+
+        End Try
+
+
 
 
 
@@ -154,6 +172,9 @@ Module Module1
             End If
         Next
 
+
+
+       
 
         Return sa
     End Function
@@ -188,26 +209,17 @@ Resetpoint:
             End If
 
         Catch ausnahme As Exception
-            ErrorHandle("Error! " & vbCrLf & ausnahme.Message)
             Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
             Exit Function
 
         End Try
 
         GoTo Resetpoint
-
-
-
-
-
-
         Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
     End Function
 
     Public Function SubRuntime()
-
 Resetpoint:
-
         Try
             If My.Computer.FileSystem.FileExists(MainFile) Then
                 File = IO.File.ReadAllLines(MainFile)
@@ -216,38 +228,18 @@ Resetpoint:
             Else
                 End
             End If
-
         Catch ausnahme As Exception
-
             Index0 = OldIndex
             MainFile = OldMainFile
-
             Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
             Exit Function
-
         End Try
-
         GoTo Resetpoint
-
-
-
-
-
-
         Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
     End Function
 
     Function directinput()
-        Console.WriteLine("Welcome!")
 DirectInput:
-        Console.ForegroundColor = ConsoleColor.Red
-        Console.Write("P")
-        Console.ForegroundColor = ConsoleColor.Yellow
-        Console.Write("A")
-        Console.ForegroundColor = ConsoleColor.Green
-        Console.Write("I")
-        Console.ForegroundColor = ConsoleColor.Cyan
-        Console.Write("S")
         Console.ForegroundColor = DefForeColor
         Console.BackgroundColor = DefBackColor
         Console.Write(">")
@@ -260,9 +252,22 @@ DirectInput:
     Public Function AllFunctions(ByVal Scriptline As String)
         If IsBinary = True Then
             Scriptline = BinaryToString(Scriptline)
-
         End If
+        Dim i As Integer = 0
+        For Each Scriptlinepart In Scriptline
+            If Scriptlinepart = " " Then
+                i += 1
+            ElseIf Scriptlinepart = vbTab Then
+                i += 1
+            Else
+                Scriptline = Scriptline.Substring(i)
+                Exit For
+            End If
+
+        Next
+
         Scriptline = Replac(Scriptline)
+
         If Scriptline.ToLower = "pause" Then
             Console.ForegroundColor = Console.BackgroundColor
             Console.ReadKey()
@@ -381,7 +386,6 @@ DirectInput:
                 ErrorHandle("Error! " & vbCrLf & ausnahme.Message)
             End Try
 
-
         ElseIf Scriptline.ToLower.StartsWith("#") Then
         ElseIf Scriptline.ToLower.StartsWith("!") Then
         ElseIf Scriptline.ToLower.StartsWith(":") Then
@@ -389,6 +393,57 @@ DirectInput:
         ElseIf Scriptline.ToLower.StartsWith("rem") Then
         ElseIf Scriptline.ToLower.StartsWith("com") Then
         ElseIf Scriptline.ToLower.StartsWith("//") Then
+
+        ElseIf Scriptline.ToLower.StartsWith("cd ") Then
+
+            If My.Computer.FileSystem.DirectoryExists(Scriptline.Substring(3)) Then
+                If Scriptline.Substring(3) = ".." Then
+                    Dir = UpperFolder(Dir, 1)
+                Else
+                    Dir = Scriptline.Substring(3)
+                End If
+            Else
+                ErrorHandle("Directory does'nt exists!")
+
+            End If
+
+            Return Dir
+            Exit Function
+        ElseIf Scriptline.ToLower.StartsWith("dir") Then
+            If Scriptline.Length > 3 Then
+                Dim DirectoryInformation As New DirectoryInfo(Scriptline.Substring(4))
+                Dim FileArray As FileInfo() = DirectoryInformation.GetFiles
+                Dim DirectoryArray As DirectoryInfo() = DirectoryInformation.GetDirectories
+                Dim FileF As FileInfo
+                Dim FileD As DirectoryInfo
+
+                For Each FileD In DirectoryArray
+                    Console.Write(FileD)
+                    Console.WriteLine("/")
+                Next
+                For Each FileF In FileArray
+                    Console.WriteLine(FileF)
+                Next
+
+            Else
+                Dim DirectoryInformation As New DirectoryInfo(Dir)
+                Dim FileArray As FileInfo() = DirectoryInformation.GetFiles
+                Dim DirectoryArray As DirectoryInfo() = DirectoryInformation.GetDirectories
+                Dim FileF As FileInfo
+                Dim FileD As DirectoryInfo
+
+                For Each FileD In DirectoryArray
+                    Console.Write(FileD)
+                    Console.WriteLine("/")
+                Next
+                For Each FileF In FileArray
+                    Console.WriteLine(FileF)
+                Next
+            End If
+
+
+
+
         ElseIf Scriptline.ToLower.StartsWith("rainbow ") Then
             Rainbow(Replac(Scriptline.Substring(8)))
 
@@ -451,22 +506,15 @@ redo:
                     VariableName = VariableName & Scriptline(ScIndex)
                     ScIndex += 1
                 End If
-
                 GoTo redo
             Catch ex As Exception
                 ErrorHandle("Error while initializing variable!")
             End Try
-
-
 NextOne:
-
-
             Dim VariableIndex As Integer = 0
             Try
                 For Each Variable In VariableNames
                     If Variable = VariableName Then
-
-
                         If Method = "=" Then
                             VariableNames(VariableIndex) = VariableName
                             Vars(VariableIndex) = Tipper(Scriptline.Substring(ScIndex))
@@ -490,15 +538,11 @@ NextOne:
                             Else
                                 Vars(VariableIndex) = "NUL"
                             End If
-
-
                         ElseIf Method = "<" Then
                             VariableNames(VariableIndex) = VariableName
                             Vars(VariableIndex) = Console.ReadLine
-
                         ElseIf Method = "key" Then
                             Try
-
                                 VariableNames(VariableIndex) = VariableName
                                 Dim keyInfo As ConsoleKeyInfo
                                 keyInfo = Console.ReadKey
@@ -506,15 +550,12 @@ NextOne:
                             Catch ex As Exception
                                 Console.WriteLine(ex.Message.ToString)
                             End Try
-
                         End If
                         Exit For
                     Else
                         VariableIndex += 1
                     End If
-
                 Next
-
                 Dim WriteIndex As Integer = 0
                 If VariableNames.Contains(VariableName) Then
                     For Each a In VariableNames
@@ -530,27 +571,18 @@ NextOne:
                             WriteIndex += 1
                         End If
                     Next
-
                     VariableNames(WriteIndex) = VariableName
                     Vars(WriteIndex) = Tipper(Replac(Scriptline.Substring(ScIndex)))
-
-
-
-
                 End If
-
             Catch ex As Exception
                 ErrorHandle("Error while initializing Variable")
             End Try
+        ElseIf Scriptline = "version" Then
+            Console.WriteLine("~Pais © Fabian Müller Version " & Versionscode & "~")
         ElseIf Scriptline = "1134-g-2601" Then
             For Each Value In Vars
                 Console.WriteLine(Value)
             Next
-
-
-
-
-
         ElseIf Scriptline.ToLower.StartsWith("if ") Then
             Try
 
@@ -565,22 +597,18 @@ first:
                     TemporIndex += 1
                     GoTo second
                 ElseIf NewScriptline(TemporIndex) = "!" Then
-
                     Method = "neq"
                     TemporIndex += 1
                     GoTo second
                 ElseIf NewScriptline(TemporIndex) = "<" Then
-
                     Method = "smaller"
                     TemporIndex += 1
                     GoTo second
                 ElseIf NewScriptline(TemporIndex) = ">" Then
-
                     Method = "bigger"
                     TemporIndex += 1
                     GoTo second
                 ElseIf NewScriptline(TemporIndex) = "@" Then
-
                     Method = "contains"
                     TemporIndex += 1
                     GoTo second
@@ -618,15 +646,11 @@ second:
                         If Tipper(First.Contains(Second)) Then
                             AllFunctions(NewScriptline.Substring(TemporIndex + 1))
                         End If
-
-
                     ElseIf Method = "doesntcontains" Then
                         If Tipper(First.Contains(Second)) Then
                         Else
                             AllFunctions(NewScriptline.Substring(TemporIndex + 1))
                         End If
-
-
                     End If
                     Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
                     Exit Function
@@ -646,7 +670,7 @@ second:
 
         ElseIf Scriptline.ToLower.StartsWith("point(") Then
             Dim Method As String = Nothing
-            Dim NewScriptline As String = Replac(Scriptline.Substring(6))
+            Dim NewScriptline As String = Replac(Scriptline.Substring(6)).Replace(" ", "")
             Dim point_first As String = ""
             Dim point_second As String = Nothing
             Dim TemporIndex As Integer = 0
@@ -686,10 +710,9 @@ point_second:
 
 
 
-
         ElseIf Scriptline.ToLower.StartsWith("random(") Then
             Dim Method As String = Nothing
-            Dim NewScriptline As String = Replac(Scriptline.Substring(7))
+            Dim NewScriptline As String = Replac(Scriptline.Substring(7)).Replace(" ", "")
             Dim random_first As String = Nothing
             Dim random_second As String = Nothing
             Dim TemporIndex As Integer = 0
@@ -725,40 +748,6 @@ random_second:
 
             TemporIndex += 1
             GoTo random_second
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         ElseIf Scriptline.ToLower.StartsWith("replace(") Then
             Dim ReplaceString As String = ""
             Dim Method As String = Nothing
@@ -771,25 +760,20 @@ replace_first:
             If NewScriptline(TemporIndex) = "|" Then
                 TemporIndex += 1
                 GoTo replace_second
-
             Else
                 replace_first = replace_first & NewScriptline(TemporIndex)
                 TemporIndex += 1
                 GoTo replace_first
             End If
-
 replace_second:
             If NewScriptline(TemporIndex) = "|" Then
                 TemporIndex += 1
                 GoTo replace_third
-
             Else
                 replace_second = replace_second & NewScriptline(TemporIndex)
                 TemporIndex += 1
                 GoTo replace_second
             End If
-
-
 replace_third:
             If NewScriptline(TemporIndex) = ")" Then
                 Try
@@ -802,52 +786,9 @@ replace_third:
                 Exit Function
             Else
                 replace_third = replace_third & NewScriptline(TemporIndex)
-
             End If
-
-
-
             TemporIndex += 1
             GoTo replace_third
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            ' ElseIf Scriptline.ToLower.StartsWith("class ") Then
-            '    Dim Classname As String = ""
-            '    Dim NewScriptline As String = ""
-            '    Dim Temporindex As Integer = 0
-            '    Dim OldIndex As Integer = Index0
-            'class_first:
-            '            If NewScriptline(Temporindex) = "(" Then
-            ' TemporIndex += 1
-            ' GoTo class_second
-            'Else
-            '    Classname = Scriptline(TemporIndex)
-            'End If
-            '
-            '
-            '
-            '            TemporIndex += 1
-            '            GoTo class_first
-            'class_second:
-            '
-            '            If File(Index0) Then
-
 
 
 
@@ -864,7 +805,7 @@ replace_third:
 
 
                 Dim Method As String = Nothing
-                Dim NewScriptline As String = Replac(Scriptline.Substring(7))
+                Dim NewScriptline As String = Replac(Scriptline.Substring(7)).Replace(" ", "")
                 Dim window_first As String = ""
                 Dim window_second As String = Nothing
                 Dim TemporIndex As Integer = 0
@@ -903,6 +844,201 @@ window_second:
             Catch ex As Exception
                 ErrorHandle("Error while setting window size!")
             End Try
+
+
+
+
+
+
+
+
+
+        ElseIf Scriptline.ToLower.StartsWith("buffer(") Then
+
+            Try
+
+
+
+
+                Dim Method As String = Nothing
+                Dim NewScriptline As String = Replac(Scriptline.Substring(7)).Replace(" ", "")
+                Dim buffer_first As String = ""
+                Dim buffer_second As String = Nothing
+                Dim TemporIndex As Integer = 0
+buffer_first:
+                If NewScriptline(TemporIndex) = "," Then
+                    TemporIndex += 1
+                    GoTo buffer_second
+
+                Else
+                    buffer_first = buffer_first & NewScriptline(TemporIndex)
+                    TemporIndex += 1
+                    GoTo buffer_first
+                End If
+buffer_second:
+                If NewScriptline(TemporIndex) = ")" Then
+                    Try
+                        Console.SetBufferSize(Convert.ToInt32(buffer_first), Convert.ToInt32(buffer_second))
+                        Console.SetBufferSize(Convert.ToInt32(buffer_first), Convert.ToInt32(buffer_second))
+                    Catch ex As Exception
+
+                    End Try
+                    Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
+                    Exit Function
+                Else
+                    buffer_second = buffer_second & NewScriptline(TemporIndex)
+                End If
+
+
+
+                TemporIndex += 1
+                GoTo buffer_second
+
+
+
+
+            Catch ex As Exception
+                ErrorHandle("Error while setting buffer size!")
+            End Try
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ElseIf Scriptline.ToLower.StartsWith("border(") Then
+            Try
+
+
+
+
+                Dim Method As String = Nothing
+                Dim NewScriptline As String = Replac(Scriptline.Substring(7)).Replace(" ", "")
+                Dim border_first As String = ""
+                Dim border_second As String = Nothing
+                Dim TemporIndex As Integer = 0
+border_first:
+                If NewScriptline(TemporIndex) = "," Then
+                    TemporIndex += 1
+                    GoTo border_second
+
+                Else
+                    border_first = border_first & NewScriptline(TemporIndex)
+                    TemporIndex += 1
+                    GoTo border_first
+                End If
+border_second:
+                If NewScriptline(TemporIndex) = ")" Then
+                    Try
+                        Dim tempcurserx = Console.CursorLeft
+                        Dim tempcursery = Console.CursorTop
+                        Dim yy As Integer = 0
+                        Dim xx As Integer = 0
+bordercalcx1:
+
+                        ''╔║═╗╚╝
+
+
+                        If xx = border_first Then
+                            Console.Write("╗")
+                            xx = 0
+                        Else
+                            If xx = 0 Then
+                                Console.Write("╔")
+                            Else
+                                Console.Write("═")
+                            End If
+                            xx += 1
+
+                            GoTo bordercalcx1
+                        End If
+
+                        Console.CursorLeft = tempcurserx
+                        Console.CursorTop = tempcursery + border_second - 1
+
+bordercalcx2:
+                        If xx = border_first Then
+                            Console.Write("╝")
+                            xx = 0
+                        Else
+                            If xx = 0 Then
+                                Console.Write("╚")
+                            Else
+                                Console.Write("═")
+                            End If
+                            xx += 1
+
+                            GoTo bordercalcx2
+                        End If
+
+                        Console.CursorLeft = tempcurserx
+                        Console.CursorTop = tempcursery
+bordercalcy1:
+
+                        Console.CursorTop += 1
+                        Console.CursorLeft = tempcurserx
+                        If yy = border_second - 2 Then
+                        Else
+                            Console.Write("║")
+
+                            yy += 1
+
+                            GoTo bordercalcy1
+                        End If
+
+                        yy = 0
+                        Console.CursorLeft = tempcurserx + xx
+                        Console.CursorTop = tempcursery
+bordercalcy2:
+
+                        Console.CursorLeft = tempcurserx + border_first
+                        Console.CursorTop += 1
+                        If yy = border_second - 2 Then
+                        Else
+                            Console.Write("║")
+                            yy += 1
+                            GoTo bordercalcy2
+                        End If
+
+                        yy = 0
+                        Console.CursorTop += 1
+                        Console.CursorLeft = 0
+
+
+
+
+                    Catch ex As Exception
+
+                    End Try
+                    Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
+                    Exit Function
+                Else
+                    border_second = border_second & NewScriptline(TemporIndex)
+                End If
+
+
+
+                TemporIndex += 1
+                GoTo border_second
+
+
+
+
+            Catch ex As Exception
+                ErrorHandle("Error while setting border size!")
+            End Try
+
+
 
 
 
@@ -1026,7 +1162,50 @@ for_second:
         ElseIf Scriptline.ToLower.StartsWith("call ") Then
 
             Try
-                If My.Computer.FileSystem.FileExists(Replac(Scriptline.Substring(5))) Then
+                If Scriptline.Substring(5).StartsWith("http://") Then
+                    Dim webclient As New System.Net.WebClient
+                    Dim WasBinary As Boolean = True
+                    If IsBinary = True Then
+                        WasBinary = True
+                    Else
+                        WasBinary = False
+                        IsBinary = True
+                    End If
+
+                    OldMainFile = MainFile
+                    OldIndex = Index0
+                    Index0 = 0
+                    webclient.DownloadFile(Scriptline.Substring(5), "tmp.tmp")
+                    MainFile = "tmp.tmp"
+                    SubRuntime()
+                    If WasBinary = True Then
+                        IsBinary = True
+                    Else
+                        IsBinary = False
+                    End If
+                ElseIf Scriptline.Substring(5).StartsWith("https://") Then
+                    Dim webclient As New System.Net.WebClient
+                    Dim WasBinary As Boolean = True
+                    If IsBinary = True Then
+                        WasBinary = True
+                    Else
+
+                        WasBinary = False
+                        IsBinary = True
+                    End If
+
+                    OldMainFile = MainFile
+                    OldIndex = Index0
+                    Index0 = 0
+                    webclient.DownloadFile(Scriptline.Substring(5), "tmp.tmp")
+                    MainFile = "tmp.tmp"
+                    SubRuntime()
+                    If WasBinary = True Then
+                        IsBinary = True
+                    Else
+                        IsBinary = False
+                    End If
+                ElseIf My.Computer.FileSystem.FileExists(Replac(Scriptline.Substring(5))) Then
                     Dim WasBinary As Boolean = True
                     If IsBinary = True Then
                         WasBinary = True
@@ -1070,7 +1249,7 @@ extent_second:
                     Try
                         If My.Computer.FileSystem.DirectoryExists("plugins\") Then
                             If My.Computer.FileSystem.FileExists("plugins\" & extent_first) Then
-                       
+
                                 Dim proc As Process = New Process
                                 proc.StartInfo.FileName = "plugins\" & extent_first
 
@@ -1442,7 +1621,15 @@ secondsa:
             End If
         ElseIf Scriptline.ToLower.StartsWith("readfile:") Then
             If My.Computer.FileSystem.FileExists(Scriptline.ToLower.Substring(9)) Then
-                Console.WriteLine(Replac(IO.File.ReadAllText(Scriptline.ToLower.Substring(9))))
+                Dim tempcurserx As Integer = Console.CursorLeft
+                Dim Readfilelines() As String = IO.File.ReadAllLines(Scriptline.ToLower.Substring(9))
+                For Each LINE In Readfilelines
+                    Console.Write(LINE)
+                    Console.CursorLeft = tempcurserx
+                    Console.CursorTop += 1
+
+                Next
+
             Else
                 If ErrorsOn = "true" Then
                     Console.ForegroundColor = ConsoleColor.Red
@@ -1549,20 +1736,64 @@ jumpot:
     End Function
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Public Function UpperFolder(ByVal FolderName As String, ByVal level As Int32) As String
+        Dim TheList As New List(Of String)()
+
+        Do While Not String.IsNullOrEmpty(FolderName)
+            Dim temp = Directory.GetParent(FolderName)
+            If temp Is Nothing Then
+                Exit Do
+            End If
+            FolderName = Directory.GetParent(FolderName).FullName
+            TheList.Add(FolderName)
+        Loop
+
+        If TheList.Count > 0 AndAlso level > 0 Then
+            If level - 1 <= TheList.Count - 1 Then
+                Return TheList(level - 1)
+            Else
+                Return FolderName
+            End If
+        Else
+            Return FolderName
+        End If
+    End Function
+
+
+
+
+
+
+
+
     Public Function Variables()
         Console.WriteLine( _
-        "%simpletime                    -Time [HH:MM]" & vbCrLf & _
-        "%time                          -Time [DD.MM.YYYY HH:MM:SS]" & vbCrLf & _
-        "%date                          -Date" & vbCrLf & _
-        "%ramav                         -Available Virtual Memory" & vbCrLf & _
-        "%ramap                         -Available Physical Memory" & vbCrLf & _
-        "%ramtv                         -Total Virtual Memory" & vbCrLf & _
-        "%ramtp                         -Total Physical Memory" & vbCrLf & _
-        "%network                       -Returns a Boolean True/False if is connected to a Network" & vbCrLf & _
-        "%os                            -Operatingsystem" & vbCrLf & _
-        "%break                         -Linebreak" & vbCrLf & _
-        "%version                       -PAIS versioncode" & vbCrLf & _
-        "%path                          -Path of temporary runtime" & vbCrLf & _
+        "%simpletime                -Time [HH:MM]" & vbCrLf & _
+        "%time                      -Time [.h/.s/.m/.t/.ticks]" & vbCrLf & _
+        "%date                      -Date %date[.m/.d/.y]" & vbCrLf & _
+        "%dir                       -Temporary Directory" & vbCrLf & _
+        "%ramav                     -Available Virtual Memory" & vbCrLf & _
+        "%ramap                     -Available Physical Memory" & vbCrLf & _
+        "%ramtv                     -Total Virtual Memory" & vbCrLf & _
+        "%ramtp                     -Total Physical Memory" & vbCrLf & _
+        "%network                   -Returns a Boolean True/False if is connected to a Network" & vbCrLf & _
+        "%os                        -Operatingsystem" & vbCrLf & _
+        "%break                     -Linebreak" & vbCrLf & _
+        "%version                   -PAIS versioncode" & vbCrLf & _
+        "%path                      -Path of temporary runtime" & vbCrLf & _
         "")
 
         Return "100101010010010100100101001001010100100101001001010100100101010010010101001011100011001001010100100110010010001010010100100101001001010100100101001001010"
@@ -1603,22 +1834,7 @@ jumpot:
         Console.ForegroundColor = DefForeColor
         Console.BackgroundColor = DefBackColor
 
-        Console.ForegroundColor = ConsoleColor.Red
-        Console.WriteLine("  ______ _____ __ _____     ")
-        Console.ForegroundColor = ConsoleColor.Yellow
-        Console.WriteLine(" /  _   |  _  |  |  ___|    ")
-        Console.ForegroundColor = ConsoleColor.Green
-        Console.WriteLine(" | |_|  | | | |  | |___     ")
-        Console.ForegroundColor = ConsoleColor.Cyan
-        Console.WriteLine(" |  ___/| |_| |  |___  |    ")
-        Console.ForegroundColor = ConsoleColor.Magenta
-        Console.WriteLine(" |  |   |  _  |  |___| |    ")
-        Console.ForegroundColor = ConsoleColor.Red
-        Console.Write(" |__|   |_| |_|__|_____|   ")
-        Console.ForegroundColor = ConsoleColor.Green
-        Console.WriteLine(Versionscode)
-        Console.ForegroundColor = ConsoleColor.Cyan
-        Console.WriteLine("    By Paitorocxon")
+        Console.WriteLine("PAIS © 2017 Paitorocxon")
 
 
 
@@ -1626,14 +1842,7 @@ jumpot:
         Console.BackgroundColor = DefBackColor
 
         Console.ForegroundColor = ConsoleColor.White
-        Console.BackgroundColor = ConsoleColor.DarkRed
-        Console.Write(vbCrLf & "P.A.I.S, PROGRAMMABLE ARHYTHMETIC INTERFACE SCRIPT" & vbCrLf & vbCrLf)
-
-        Console.ForegroundColor = DefForeColor
-        Console.BackgroundColor = DefBackColor
-
-        Console.ForegroundColor = ConsoleColor.White
-        Console.WriteLine( _
+        Dim Helptext As String = _
                 "" & vbCrLf & _
                 "" & vbCrLf & _
          "wait MILLISECONDS                  -Waits until the time is over" & vbCrLf & _
@@ -1641,6 +1850,7 @@ jumpot:
          "foreground=COLORNAME               -Change foregroundcolor" & vbCrLf & _
          "background=COLORNAME               -Change backgroundcolor" & vbCrLf & _
          "title=TEXT                         -Change the title" & vbCrLf & _
+         "border(NUMBER,NUMBER)              -Create border with width W and height H" & vbCrLf & _
          "call FILENAME                      -Run another module" & vbCrLf & _
          "clear                              -Clear the console" & vbCrLf & _
          "downloadfile:URL<PATH/NAME>        -Download and save file" & vbCrLf & _
@@ -1694,7 +1904,8 @@ jumpot:
          "if %VAR@%VAR>COMMAND    -IF VALUE1 contains VALUE2 then do a command" & vbCrLf & _
          "if %VAR$%VAR>COMMAND    -IF VALUE1 does'nt contains VALUE2 then do a command" & vbCrLf & _
          "" & _
-         "")
+         ""
+        Console.WriteLine(Helptext)
         Console.ForegroundColor = DefForeColor
         Console.BackgroundColor = DefBackColor
 
@@ -1772,13 +1983,13 @@ jumpot:
        " |  |   |  ||     |  __| |\ \| |    | |  __|" & vbCrLf & _
        " |  |___|  | \____| |__| | \   |____| | |__" & vbCrLf & _
        " |______|__|\_____|____|_|  \__|______|____|" & vbCrLf & _
-       "    COPYRIGHT © 2017 Fabian Müller" & vbCrLf & _
+       "    COPYRIGHT © 2017-2018 Fabian Müller" & vbCrLf & _
        "" & vbCrLf & _
        "" & vbCrLf & _
                           "")
         Console.WriteLine("MIT License")
         Console.WriteLine("")
-        Console.WriteLine("Copyright (c) 2017 Fabian Müller (aka Paitorocxon)")
+        Console.WriteLine("Copyright (c) 2017-2018 Fabian Müller (aka Paitorocxon)")
         Console.WriteLine("")
         Console.WriteLine("Permission is hereby granted, free of charge, to any person obtaining a copy")
         Console.WriteLine("of this software and associated documentation files (the ""Software""), to deal")

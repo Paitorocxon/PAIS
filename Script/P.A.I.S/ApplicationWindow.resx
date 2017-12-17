@@ -134,7 +134,7 @@
     <value>284, 262</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>P.A.I.S Window</value>
+    <value>[]</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ApplicationWindow</value>

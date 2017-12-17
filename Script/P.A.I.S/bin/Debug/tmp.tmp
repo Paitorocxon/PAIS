@@ -1,0 +1,7 @@
+﻿<title>Sesc</title>
+<link rel="shortcut icon" href="favicon.png" type="image/png" />
+<center>
+﻿﻿﻿<link rel="stylesheet" href="stylesheet.css">﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿
+﻿<div id="main"><div id="navi"><div id="left"><div id="heading"><b>Sesc</b></div></div><div id="right" style="padding-right: 6pt;"><form><input type="text" value="" id="search" name="search"><input type="submit" value="Suchen"></form></div><a id="menuitem" href="sesc.php">Start</a><a id="menuitem" href="sesc.php?page=control">Steuerung</a><a id="menuitem" href="sesc.php?page=help">Hilfe</a><a id="menuitem" href="sesc.php?page=about">Über</a> </div><div id="light"></div><div id="innermain"><form><input type="submit" id="addknopp" value="+"> <input type="hidden" id="action" name="action" value="edit"><input type="text" id="m" name="m" value=""></form><br><div id="foot">Sesc © 2017 Fabian Müller</div></div>
+</div><br><br><br><br>
+
