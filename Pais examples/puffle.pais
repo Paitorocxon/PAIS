@@ -1,0 +1,15 @@
+#pais 1.1.5
+title=Puffle
+background=white
+clear
+point(1,1)
+background=darkyellow
+foreground=yellow
+border(20,15)
+point(3,2)
+foreground=magenta
+background=white
+readfile:puffle
+window(23,17)
+pause
+goto 0

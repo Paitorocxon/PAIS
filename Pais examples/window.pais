@@ -1,0 +1,5 @@
+window.add(image,bild)
+window.element.edit(bild,backgroundimage,C:\users\admin\desktop\favicon.ico)
+window.element.edit(bild,width,200)
+window.element.edit(bild,height,200)
+window.show

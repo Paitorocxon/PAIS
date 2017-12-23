@@ -1,0 +1,5 @@
+window.add(panel,bild)
+window.element.edit(bild,background,green)
+window.element.edit(bild,width,200)
+window.element.edit(bild,height,200)
+window.show

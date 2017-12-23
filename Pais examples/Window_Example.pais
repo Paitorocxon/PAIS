@@ -1,0 +1,24 @@
+#pais 1.2.0
+
+window.add(image,pic1)
+window.add(image,pic2)
+window.add(text,text1)
+
+window.element.edit(text1,text,Thank me later :D)
+window.element.edit(text1,foreground,yellow)
+window.element.edit(text1,xcoord,590)
+window.element.edit(text1,ycoord,379)
+window.element.edit(text1,size,100)
+
+
+window.element.edit(pic1,width,590)
+window.element.edit(pic1,height,872)
+
+window.element.edit(pic2,width,505)
+window.element.edit(pic2,height,379)
+
+window.element.edit(pic1,backgroundimage,packs/an1.jpg)
+window.element.edit(pic2,backgroundimage,packs/an2.jpg)
+
+window.element.edit(pic2,xcoord,590)
+window.show

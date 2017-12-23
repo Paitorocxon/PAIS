@@ -1,0 +1,20 @@
+#pais 1.2.0
+
+window.add(text,text1)
+window.add(text,text2)
+Window.add(image,image)
+window.element.edit(image,height,256)
+window.element.edit(image,width,256)
+window.element.edit(text1,foreground,yellow)
+window.element.edit(text1,ycoord,256)
+window.element.edit(text1,text,PAIS 1.2.0 has alot of new features!)
+window.element.edit(text2,ycoord,300)
+window.element.edit(text2,size,80)
+window.element.edit(text2,width,400)
+window.element.edit(text1,width,400)
+
+window.element.edit(text2,background,red)
+window.element.edit(text2,foreground,white)
+window.element.edit(text2,text,YEAAH!!!!!!!! PAIS!!!)
+window.element.edit(image,backgroundimage,favicon.ico)
+window.show

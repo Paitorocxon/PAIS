@@ -1,0 +1,24 @@
+#pais 1.1.5
+
+goto first
+
+#================================
+[second]
+        rainbow PAIS_PAIS_PAIS_PAIS%break
+        rainbow PAIS_PAIS_PAIS_PAIS%break
+        rainbow PAIS_PAIS_PAIS_PAIS%break
+        rainbow PAIS_PAIS_PAIS_PAIS%break
+        foreground=white
+    goto third
+#================================
+[third]
+        clear
+        border(25,10)
+        point(1,1)
+        float %time
+    goto 0
+#================================
+[first]
+        clear
+    goto second
+#================================

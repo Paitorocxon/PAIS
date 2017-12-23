@@ -1,0 +1,25 @@
+
+window.title= %var
+$var=0
+window.add(text,TEXT%var)
+window.element.edit(TEXT%var,text,%var)
+window.element.edit(TEXT%var,foreground,hotpink)
+window.element.edit(TEXT%var,width,50)
+window.element.edit(TEXT%var,height,20)
+window.element.edit(TEXT%var,ycoord,%var)
+$var+20
+window.add(text,TEXT%var)
+window.element.edit(TEXT%var,text,%var)
+window.element.edit(TEXT%var,foreground,firebrick)
+window.element.edit(TEXT%var,width,50)
+window.element.edit(TEXT%var,height,20)
+window.element.edit(TEXT%var,ycoord,%var)
+$var+20
+window.add(text,TEXT%var)
+window.element.edit(TEXT%var,text,%var)
+window.element.edit(TEXT%var,foreground,coral)
+window.element.edit(TEXT%var,width,50)
+window.element.edit(TEXT%var,height,20)
+window.element.edit(TEXT%var,ycoord,%var)
+
+window.show
