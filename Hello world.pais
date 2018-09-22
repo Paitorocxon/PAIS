@@ -1,0 +1,25 @@
+#Pais 1.X
+    title=Hello world Program in PAIS © 2018 Paitorocxon
+        echoL Hello world! [compiled: %date|%time CET]
+        echo I am 
+        foreground=green
+        echo P
+        foreground=yellow
+        echo a
+        foreground=red
+        echo i
+        foreground=magenta
+        echo s
+        foreground=blue
+        echoL !
+        foreground=red
+        echoL        .:::.   .:::.
+        echoL       :::::::.:::::::
+        echoL       :::::::::::::::
+        echoL       ':::::::::::::'
+        echoL         ':::::::::'
+        echoL           ':::::'
+        echoL             ':'
+        wait 5
+        beep(1000,100)
+    pause
